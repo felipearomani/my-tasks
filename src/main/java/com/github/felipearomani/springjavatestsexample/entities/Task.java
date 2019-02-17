@@ -3,13 +3,13 @@ package com.github.felipearomani.springjavatestsexample.entities;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "tasks", indexes = {
+        @Index(name = "unique_task", columnList = "title, status", unique = true)
+})
 @Getter
 public class Task {
 
