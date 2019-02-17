@@ -70,7 +70,7 @@ public class AddTaskServiceImplTest extends AbstractIntegrationTest {
 //    @Test(expected = DuplicatedTaskException.class)
 //    public void testMustThrowDuplicatedTaskException_whenSaveTaskWithSameTitleAndStatusNewOrInProgress() {
 //
-//        //TODO here
+//        //TODO here, we need writing this test
 //
 //    }
 
