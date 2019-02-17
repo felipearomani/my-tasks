@@ -2,9 +2,11 @@ package com.github.felipearomani.springjavatestsexample.services;
 
 import com.github.felipearomani.springjavatestsexample.entities.IncomingTask;
 import com.github.felipearomani.springjavatestsexample.entities.Task;
+import com.github.felipearomani.springjavatestsexample.exceptions.DuplicatedTaskException;
 import com.github.felipearomani.springjavatestsexample.exceptions.NoTitleException;
 import com.github.felipearomani.springjavatestsexample.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -21,7 +23,8 @@ public final class AddTaskServiceImpl implements AddTaskService {
     }
 
     @Override
-    public Task add(IncomingTask incomingTask) throws IllegalArgumentException, NoTitleException {
+    public Task add(IncomingTask incomingTask)
+            throws IllegalArgumentException, NoTitleException, DuplicatedTaskException {
 
         AssertIncomingTask.isNull(incomingTask);
         AssertIncomingTask.titleIsNotNullOrEmpty(incomingTask);
@@ -33,7 +36,11 @@ public final class AddTaskServiceImpl implements AddTaskService {
                 .status(Task.Status.NEW)
                 .build();
 
-        return taskRepository.save(task);
+        try {
+            return taskRepository.save(task);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DuplicatedTaskException("The task \"" + incomingTask.getTitle() + "\" already exists!");
+        }
     }
 }
 

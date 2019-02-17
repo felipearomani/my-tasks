@@ -67,11 +67,23 @@ public class AddTaskServiceImplTest extends AbstractIntegrationTest {
         addTaskService.add(null);
     }
 
-//    @Test(expected = DuplicatedTaskException.class)
-//    public void testMustThrowDuplicatedTaskException_whenSaveTaskWithSameTitleAndStatusNewOrInProgress() {
-//
-//        //TODO here, we need writing this test
-//
-//    }
+    @Test(expected = DuplicatedTaskException.class)
+    public void testMustThrowDuplicatedTaskException_whenSaveTaskWithSameTitleAndStatusNewOrInProgress() {
+
+        //Given
+        IncomingTask task1 = IncomingTask.builder()
+                .title("My repeated task")
+                .description("This is a amazing task!")
+                .build();
+
+        IncomingTask task2 = IncomingTask.builder()
+                .title("My repeated task")
+                .description("This is a amazing task!")
+                .build();
+
+        //do
+        addTaskService.add(task1);
+        addTaskService.add(task2);
+    }
 
 }
