@@ -13,4 +13,9 @@ An app to control your tasks. This app is used for study purpose, so feel free t
 - MySQL
 - REST API
 - Integration tests with docker using [Container Tests](https://www.testcontainers.org/)
- 
+
+
+
+
+
+- 
